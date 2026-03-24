@@ -13,9 +13,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-
-  overflow: hidden;
 }
 
 .background {
@@ -31,7 +28,7 @@ body {
   position: relative;
   z-index: 1;
 
-  height: 100vh;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,8 +37,12 @@ body {
 .card {
   background: linear-gradient(180deg, #2b4eff, #0a1a3a);
 
-  padding: 45px;
+  padding: 50px;
   border-radius: 28px;
+
+  width: 100%;
+  max-width: 420px;
+
   text-align: center;
 
   border: 2px solid rgba(255,255,255,0.15);
@@ -159,71 +160,44 @@ h1 {
 @media (max-width: 768px) {
 
   body {
-    height: auto;
+    align-items: center;
     padding: 20px;
-    overflow-y: auto;
-  }
-
-  .container {
-    height: auto;
-    padding: 20px 0;
   }
 
   .card {
-    padding: 30px 25px;
-    width: 90%;
+    width: 100%;
+    max-width: 100%;
+    padding: 35px 25px;
   }
 
   h1 {
     font-size: 22px;
   }
 
-  .sub {
-    font-size: 14px;
-  }
-
-  #contador {
-    font-size: 16px;
-  }
-
   .lock {
-    font-size: 65px;
+    font-size: 70px;
   }
 
   .key {
-    font-size: 40px;
+    font-size: 45px;
   }
 }
 
 @media (max-width: 480px) {
 
-  body {
-    padding: 15px;
-  }
-
   .card {
-    padding: 25px 20px;
-    border-radius: 20px;
+    padding: 30px 20px;
   }
 
   h1 {
-    font-size: 18px;
-  }
-
-  .sub {
-    font-size: 13px;
-  }
-
-  #contador {
-    font-size: 14px;
+    font-size: 20px;
   }
 
   .lock {
-    font-size: 55px;
-    margin: 20px 0;
+    font-size: 60px;
   }
 
   .key {
-    font-size: 35px;
+    font-size: 42px;
   }
 }

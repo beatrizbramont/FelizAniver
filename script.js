@@ -13,9 +13,11 @@ let hp = 100;
 let timer;
 let coracoesInterval;
 
-// let podeAbrir = false;
-let podeAbrir = true;
+let podeAbrir = true; // 🔥 deixe false depois
 
+// =========================
+// ⏳ CONTADOR
+// =========================
 if (contador && cadeado) {
   const intervalo = setInterval(() => {
     const agora = new Date().getTime();
@@ -25,8 +27,7 @@ if (contador && cadeado) {
       clearInterval(intervalo);
       contador.innerHTML = "Chegou o dia 💖";
       cadeado.classList.add("glow");
-
-      podeAbrir = true; 
+      podeAbrir = true;
       return;
     }
 
@@ -34,16 +35,18 @@ if (contador && cadeado) {
     const horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 
     contador.innerHTML = `${dias} dias • ${horas} horas`;
-
   }, 1000);
 }
 
+// =========================
+// 🔐 CADEADO + CHAVE
+// =========================
 if (chave && cadeado) {
 
   function abrirCadeado() {
     if (!podeAbrir) {
-    mostrarToast("Calma meu amor… ainda não chegou o dia 💙");
-    return;
+      mostrarToast("Calma meu amor… ainda não chegou o dia 💙");
+      return;
     }
 
     cadeado.innerHTML = '<i class="fa-solid fa-lock-open"></i>';
@@ -54,6 +57,7 @@ if (chave && cadeado) {
     }, 1200);
   }
 
+  // 👉 DRAG DESKTOP
   chave.addEventListener("dragstart", (e) => {
     e.dataTransfer.setData("text", "key");
   });
@@ -65,19 +69,33 @@ if (chave && cadeado) {
     if (data === "key") abrirCadeado();
   });
 
+  // 👉 MOBILE (ARRASTE PERFEITO)
   let tocando = false;
+  let offsetX = 0;
+  let offsetY = 0;
 
-  chave.addEventListener("touchstart", () => {
+  chave.addEventListener("touchstart", (e) => {
     tocando = true;
-    chave.style.position = "absolute";
+
+    const touch = e.touches[0];
+    const rect = chave.getBoundingClientRect();
+
+    offsetX = touch.clientX - rect.left;
+    offsetY = touch.clientY - rect.top;
+
+    chave.style.position = "fixed";
+    chave.style.zIndex = "9999";
+
+    e.preventDefault();
   });
 
   document.addEventListener("touchmove", (e) => {
     if (!tocando) return;
 
-    let touch = e.touches[0];
-    chave.style.left = touch.clientX - 20 + "px";
-    chave.style.top = touch.clientY - 20 + "px";
+    const touch = e.touches[0];
+
+    chave.style.left = (touch.clientX - offsetX) + "px";
+    chave.style.top = (touch.clientY - offsetY) + "px";
   });
 
   document.addEventListener("touchend", () => {
@@ -98,6 +116,9 @@ if (chave && cadeado) {
   });
 }
 
+// =========================
+// 🌌 FUNDO ANIMADO
+// =========================
 if (bg && !document.getElementById("carta") && !document.getElementById("cadeado")) {
 
   for (let i = 0; i < 30; i++) {
@@ -112,7 +133,7 @@ if (bg && !document.getElementById("carta") && !document.getElementById("cadeado
   }
 
   coracoesInterval = setInterval(() => {
-    for (let i = 0; i < 3; i++) { 
+    for (let i = 0; i < 3; i++) {
       let span = document.createElement("span");
       span.innerHTML = "❤";
 
@@ -127,6 +148,9 @@ if (bg && !document.getElementById("carta") && !document.getElementById("cadeado
   }, 900);
 }
 
+// =========================
+// 🎮 JOGO
+// =========================
 if (document.getElementById("hp")) {
 
   timer = setInterval(() => {
@@ -157,6 +181,9 @@ if (document.getElementById("hp")) {
   };
 }
 
+// =========================
+// 🔙 VOLTAR
+// =========================
 window.voltarPagina = function () {
   const pagina = window.location.pathname;
 
@@ -164,13 +191,14 @@ window.voltarPagina = function () {
     window.location.href = "index.html";
   } else if (pagina.includes("carta.html")) {
     window.location.href = "jogo.html";
-  } else if (pagina.includes("index.html")) {
-    window.location.href = "index.html";
   } else {
     window.location.href = "index.html";
   }
 };
 
+// =========================
+// ❤️ SISTEMA EXTRA
+// =========================
 function segundaChance() {
   if (timer) clearInterval(timer);
 
@@ -191,13 +219,11 @@ function segundaChance() {
       tempo--;
       if (tempo <= 0) segundaChance();
     }, 1000);
-
   }, 2000);
 }
 
 function gerarCoracoes() {
   const container = document.querySelector(".hearts");
-
   if (!container) return;
 
   for (let i = 0; i < 23; i++) {
@@ -209,7 +235,6 @@ function gerarCoracoes() {
     heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
 
     container.appendChild(heart);
-
     setTimeout(() => heart.remove(), 6000);
   }
 }
@@ -223,7 +248,6 @@ function soltarConfete() {
     conf.style.animationDuration = (2 + Math.random() * 2) + "s";
 
     document.body.appendChild(conf);
-
     setTimeout(() => conf.remove(), 4000);
   }
 }
@@ -234,7 +258,6 @@ function showTrophies() {
   t.innerText = "+30 🏆";
 
   document.body.appendChild(t);
-
   setTimeout(() => t.remove(), 2500);
 }
 
@@ -282,12 +305,9 @@ function abrirBau() {
 
   setTimeout(() => {
     bau.style.display = "none";
-
     carta.classList.remove("hidden");
     carta.classList.add("show");
-
     gerarCoracoes();
-
   }, 500);
 }
 
@@ -302,7 +322,6 @@ function mostrarToast(msg) {
 
   setTimeout(() => {
     toast.classList.remove("show");
-
     setTimeout(() => toast.remove(), 300);
-  }, 5000); 
+  }, 5000);
 }
