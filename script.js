@@ -13,9 +13,10 @@ let hp = 100;
 let timer;
 let coracoesInterval;
 
-let podeAbrir = true; 
+let podeAbrir = false; 
+// let podeAbrir = true; 
 
-if (contador && cadeado) {
+if (contador) {
   const intervalo = setInterval(() => {
     const agora = new Date().getTime();
     const distancia = dataAlvo - agora;
@@ -23,7 +24,7 @@ if (contador && cadeado) {
     if (distancia <= 0) {
       clearInterval(intervalo);
       contador.innerHTML = "Chegou o dia 💖";
-      cadeado.classList.add("glow");
+      if (cadeado) cadeado.classList.add("glow");
       podeAbrir = true;
       return;
     }
@@ -37,19 +38,37 @@ if (contador && cadeado) {
 
 if (chave && cadeado) {
 
-  function abrirCadeado() {
-    if (!podeAbrir) {
-      mostrarToast("Calma meu amor… ainda não chegou o dia 💙");
-      return;
-    }
+function abrirCadeado() {
+  const agora = new Date().getTime();
 
+  if (agora < dataAlvo) {
+    mostrarToast("Calma meu amor… ainda não chegou o dia 💙");
+    return;
+  }
+
+  const som = document.getElementById("somCadeado");
+  if (som) som.play();
+
+  if (navigator.vibrate) {
+    navigator.vibrate([100, 50, 200]);
+  }
+
+  const lockRect = cadeado.getBoundingClientRect();
+
+  chave.style.transition = "all 0.4s ease";
+  chave.style.left = lockRect.left + "px";
+  chave.style.top = lockRect.top + "px";
+  chave.style.transform = "scale(0.8) rotate(20deg)";
+
+  setTimeout(() => {
     cadeado.innerHTML = '<i class="fa-solid fa-lock-open"></i>';
     cadeado.style.transform = "scale(1.2)";
+  }, 400);
 
-    setTimeout(() => {
-      window.location.href = "jogo.html";
-    }, 1200);
-  }
+  setTimeout(() => {
+    window.location.href = "jogo.html";
+  }, 1200);
+}
 
   chave.addEventListener("dragstart", (e) => {
     e.dataTransfer.setData("text", "key");
@@ -109,9 +128,6 @@ cadeado.addEventListener("click", abrirCadeado);
   });
 }
 
-// =========================
-// 🌌 FUNDO ANIMADO
-// =========================
 if (bg && !document.getElementById("carta") && !document.getElementById("cadeado")) {
 
   for (let i = 0; i < 30; i++) {
