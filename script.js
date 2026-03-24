@@ -74,41 +74,45 @@ if (chave && cadeado) {
   let offsetY = 0;
 
   chave.addEventListener("touchstart", (e) => {
-  tocando = true;
+    tocando = true;
 
-  chave.style.position = "fixed";
-  chave.style.left = e.touches[0].clientX + "px";
-  chave.style.top = e.touches[0].clientY + "px";
-  chave.style.transform = "translate(-50%, -50%)"; // 🔥 GRUDA NO DEDO
-  chave.style.zIndex = "9999";
+    const touch = e.touches[0];
+    const rect = chave.getBoundingClientRect();
 
-  e.preventDefault();
-});
+    offsetX = touch.clientX - rect.left;
+    offsetY = touch.clientY - rect.top;
 
-document.addEventListener("touchmove", (e) => {
-  if (!tocando) return;
+    chave.style.position = "fixed";
+    chave.style.zIndex = "9999";
 
-  chave.style.left = e.touches[0].clientX + "px";
-  chave.style.top = e.touches[0].clientY + "px";
-});
+    e.preventDefault();
+  });
 
-document.addEventListener("touchend", () => {
-  if (!tocando) return;
+  document.addEventListener("touchmove", (e) => {
+    if (!tocando) return;
 
-  tocando = false;
+    const touch = e.touches[0];
 
-  const lockRect = cadeado.getBoundingClientRect();
-  const keyX = parseInt(chave.style.left);
-  const keyY = parseInt(chave.style.top);
+    chave.style.left = (touch.clientX - offsetX) + "px";
+    chave.style.top = (touch.clientY - offsetY) + "px";
+  });
 
-  const colidiu =
-    keyX > lockRect.left &&
-    keyX < lockRect.right &&
-    keyY > lockRect.top &&
-    keyY < lockRect.bottom;
+  document.addEventListener("touchend", () => {
+    if (!tocando) return;
 
-  if (colidiu) abrirCadeado();
-});
+    tocando = false;
+
+    const lockRect = cadeado.getBoundingClientRect();
+    const keyRect = chave.getBoundingClientRect();
+
+    const colidiu =
+      keyRect.right > lockRect.left &&
+      keyRect.left < lockRect.right &&
+      keyRect.bottom > lockRect.top &&
+      keyRect.top < lockRect.bottom;
+
+    if (colidiu) abrirCadeado();
+  });
 }
 
 if (bg && !document.getElementById("carta") && !document.getElementById("cadeado")) {
