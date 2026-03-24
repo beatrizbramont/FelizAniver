@@ -69,6 +69,7 @@ if (chave && cadeado) {
     if (data === "key") abrirCadeado();
   });
 
+  // 👉 MOBILE (ARRASTE PERFEITO)
   let tocando = false;
   let offsetX = 0;
   let offsetY = 0;
@@ -115,6 +116,9 @@ if (chave && cadeado) {
   });
 }
 
+// =========================
+// 🌌 FUNDO ANIMADO
+// =========================
 if (bg && !document.getElementById("carta") && !document.getElementById("cadeado")) {
 
   for (let i = 0; i < 30; i++) {
