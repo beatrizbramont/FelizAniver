@@ -37,11 +37,11 @@ body {
 .card {
   background: linear-gradient(180deg, #2b4eff, #0a1a3a);
 
-  padding: 50px;
-  border-radius: 28px;
+  padding: 60px 40px;
+  border-radius: 32px;
 
   width: 100%;
-  max-width: 420px;
+  max-width: 500px;
 
   text-align: center;
 
@@ -57,7 +57,7 @@ body {
 
 h1 {
   font-weight: 700;
-  font-size: 28px;
+  font-size: 36px;
 
   color: #ffffff;
 
@@ -67,19 +67,21 @@ h1 {
 }
 
 .sub {
+  font-size: 20px;
   opacity: 0.7;
   margin-bottom: 20px;
   color: #cceeff;
 }
 
 #contador {
-  margin: 20px 0;
-  font-size: 18px;
+  margin: 25px 0;
+  font-size: 24px;
+  font-weight: bold;
   color: #e0f2ff;
 }
 
 .lock {
-  font-size: 80px;
+  font-size: 100px;
   color: #00a2ff;
   margin: 30px;
   transition: 0.3s;
@@ -87,7 +89,7 @@ h1 {
 }
 
 .key {
-  font-size: 50px;
+  font-size: 65px;
   cursor: grab;
   color: gold;
   text-shadow: 0 0 10px gold;
@@ -132,10 +134,10 @@ h1 {
   background: rgba(0, 0, 0, 0.8);
   color: #fff;
 
-  padding: 14px 22px;
+  padding: 18px 30px;
   border-radius: 12px;
 
-  font-size: 14px;
+  font-size: 18px;
   text-align: center;
 
   box-shadow: 0 0 15px rgba(0,0,0,0.5);
@@ -171,7 +173,7 @@ h1 {
   }
 
   h1 {
-    font-size: 22px;
+    font-size: 28px;
   }
 
   .lock {
