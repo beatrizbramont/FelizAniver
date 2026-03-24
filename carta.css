@@ -1,0 +1,255 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background: radial-gradient(circle at center, #1e3c72, #0a1a3a);
+  background-attachment: fixed;
+  color: #fff;
+  overflow-y: auto; 
+  min-height: 100vh;
+  padding-bottom: 50px; 
+}
+.btn-voltar {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+
+  width: 40px;
+  height: 40px;
+
+  background: linear-gradient(145deg, #ffd54f, #ffb300);
+  border-radius: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 16px; /* 🔥 diminui o ícone */
+  color: #5a3d00;
+
+  box-shadow:
+    0 3px 0 #c68400,
+    0 6px 10px rgba(0,0,0,0.3);
+
+  cursor: pointer;
+  z-index: 9999;
+
+  transition: 0.2s;
+}
+
+.btn-voltar:active {
+  transform: translateY(4px);
+  box-shadow:
+    0 2px 0 #c68400,
+    0 4px 10px rgba(0,0,0,0.3);
+}
+
+.btn-voltar:hover {
+  transform: scale(1.05);
+}
+
+.btn-voltar i {
+  filter: drop-shadow(0 0 5px rgba(255, 200, 0, 0.8));
+}
+
+.background {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background: radial-gradient(circle at 30% 30%, rgba(0,162,255,0.15), transparent),
+              radial-gradient(circle at 70% 70%, rgba(0,162,255,0.1), transparent);
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 600px; 
+  margin: 40px auto;
+  padding: 40px;
+  background: linear-gradient(145deg, #2b4eff, #0a1a3a);
+  border-radius: 20px;
+  border: 4px solid #333; 
+  outline: 4px solid rgba(255, 215, 0, 0.6);
+  outline-offset: -12px;
+  box-shadow:
+    0 0 30px rgba(0, 162, 255, 0.5),
+    0 20px 50px rgba(0,0,0,0.8),
+    inset 0 0 40px rgba(0, 162, 255, 0.3);
+  opacity: 0;
+}
+
+.container.show {
+  display: block;
+  animation: revealCard 0.6s forwards;
+}
+
+@keyframes revealCard {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) rotateY(90deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotateY(0);
+  }
+}
+
+.titulo {
+  text-align: center;
+  margin-bottom: 25px;
+  font-weight: 800;
+  font-size: 32px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #fff;
+  text-shadow: 
+    3px 3px 0px #000, 
+    -1px -1px 0px #000,  
+    1px -1px 0px #000,
+    -1px 1px 0px #000,
+    0px 0px 20px rgba(0,162,255,0.8);
+}
+
+#texto {
+  line-height: 1.6;
+  font-size: 18px;
+  white-space: pre-line;
+  color: #ffffff;
+  padding: 10px 20px;
+  background: rgba(0, 0, 0, 0.2); 
+  border-radius: 15px;
+  word-break: break-word;
+  text-align: left;
+}
+
+.hidden {
+  display: none;
+}
+
+.bau {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150px;
+  height: 110px;
+  cursor: pointer;
+  z-index: 10;
+
+  animation: pulseChest 1.5s infinite;
+}
+
+@keyframes pulseChest {
+  0%,100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.08); }
+}
+
+.bau.aberto .tampa {
+  transform: rotateX(120deg);
+}
+
+.bau.aberto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.9), transparent 70%);
+  animation: flash 0.5s forwards;
+}
+
+@keyframes flash {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.confetti {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  top: -10px;
+  border-radius: 50%;
+  animation: cair linear forwards;
+}
+
+.confetti.blue {
+  background: #00a2ff;
+}
+
+.confetti.gold {
+  background: gold;
+}
+
+@keyframes cair {
+  to {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .container {
+    margin: 20px;
+    padding: 25px;
+    max-width: 90%;
+  }
+
+  .titulo {
+    font-size: 24px;
+  }
+
+  #texto {
+    font-size: 16px;
+    padding: 10px 15px;
+  }
+
+  #bau {
+    width: 180px !important;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .btn-voltar {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+
+  body {
+    padding-bottom: 30px;
+  }
+
+  .container {
+    margin: 15px;
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  .titulo {
+    font-size: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  #texto {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .bau {
+    width: 100px;
+    height: 75px;
+  }
+
+  #texto {
+    padding: 12px;
+  }
+}
