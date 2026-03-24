@@ -69,56 +69,48 @@ if (chave && cadeado) {
     if (data === "key") abrirCadeado();
   });
 
-  // 👉 MOBILE (ARRASTE PERFEITO)
   let tocando = false;
   let offsetX = 0;
   let offsetY = 0;
 
   chave.addEventListener("touchstart", (e) => {
-    tocando = true;
+  tocando = true;
 
-    const touch = e.touches[0];
-    const rect = chave.getBoundingClientRect();
+  chave.style.position = "fixed";
+  chave.style.left = e.touches[0].clientX + "px";
+  chave.style.top = e.touches[0].clientY + "px";
+  chave.style.transform = "translate(-50%, -50%)"; // 🔥 GRUDA NO DEDO
+  chave.style.zIndex = "9999";
 
-    offsetX = touch.clientX - rect.left;
-    offsetY = touch.clientY - rect.top;
+  e.preventDefault();
+});
 
-    chave.style.position = "fixed";
-    chave.style.zIndex = "9999";
+document.addEventListener("touchmove", (e) => {
+  if (!tocando) return;
 
-    e.preventDefault();
-  });
+  chave.style.left = e.touches[0].clientX + "px";
+  chave.style.top = e.touches[0].clientY + "px";
+});
 
-  document.addEventListener("touchmove", (e) => {
-    if (!tocando) return;
+document.addEventListener("touchend", () => {
+  if (!tocando) return;
 
-    const touch = e.touches[0];
+  tocando = false;
 
-    chave.style.left = (touch.clientX - offsetX) + "px";
-    chave.style.top = (touch.clientY - offsetY) + "px";
-  });
+  const lockRect = cadeado.getBoundingClientRect();
+  const keyX = parseInt(chave.style.left);
+  const keyY = parseInt(chave.style.top);
 
-  document.addEventListener("touchend", () => {
-    if (!tocando) return;
+  const colidiu =
+    keyX > lockRect.left &&
+    keyX < lockRect.right &&
+    keyY > lockRect.top &&
+    keyY < lockRect.bottom;
 
-    tocando = false;
-
-    const lockRect = cadeado.getBoundingClientRect();
-    const keyRect = chave.getBoundingClientRect();
-
-    const colidiu =
-      keyRect.right > lockRect.left &&
-      keyRect.left < lockRect.right &&
-      keyRect.bottom > lockRect.top &&
-      keyRect.top < lockRect.bottom;
-
-    if (colidiu) abrirCadeado();
-  });
+  if (colidiu) abrirCadeado();
+});
 }
 
-// =========================
-// 🌌 FUNDO ANIMADO
-// =========================
 if (bg && !document.getElementById("carta") && !document.getElementById("cadeado")) {
 
   for (let i = 0; i < 30; i++) {
