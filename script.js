@@ -13,11 +13,8 @@ let hp = 100;
 let timer;
 let coracoesInterval;
 
-let podeAbrir = true; // 🔥 deixe false depois
+let podeAbrir = true; 
 
-// =========================
-// ⏳ CONTADOR
-// =========================
 if (contador && cadeado) {
   const intervalo = setInterval(() => {
     const agora = new Date().getTime();
@@ -38,9 +35,6 @@ if (contador && cadeado) {
   }, 1000);
 }
 
-// =========================
-// 🔐 CADEADO + CHAVE
-// =========================
 if (chave && cadeado) {
 
   function abrirCadeado() {
@@ -57,7 +51,6 @@ if (chave && cadeado) {
     }, 1200);
   }
 
-  // 👉 DRAG DESKTOP
   chave.addEventListener("dragstart", (e) => {
     e.dataTransfer.setData("text", "key");
   });
@@ -68,8 +61,8 @@ if (chave && cadeado) {
     const data = e.dataTransfer.getData("text");
     if (data === "key") abrirCadeado();
   });
+cadeado.addEventListener("click", abrirCadeado);
 
-  // 👉 MOBILE (ARRASTE PERFEITO)
   let tocando = false;
   let offsetX = 0;
   let offsetY = 0;
